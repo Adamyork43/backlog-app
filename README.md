@@ -1,16 +1,50 @@
-# React + Vite
+# My Backlog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack-feeling React app for tracking films, shows, games, and books you want to get to — with a twist: instead of just scrolling a list, you filter by how much time and energy you actually have right now, and get a suggestion tailored to your mood.
 
-Currently, two official plugins are available:
+**Live demo:** [link coming soon]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Why I built this
 
-## React Compiler
+Most backlog/watchlist apps are just a list. I wanted something that solved the actual problem I have: I know what I want to watch/play/read eventually, but I never know what fits *right now*. So instead of a plain CRUD list, the core feature is a mood-based filter and suggestion system.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Add items with type (TV Show / Film / Game / Book), estimated time commitment, and energy level required
+- Filter your backlog by time available and energy level
+- **Surprise Me** — get a single suggested item from your filtered backlog, weighted toward the category you've rated highest in the past
+- Mark items as done and rate them 1–5
+- Completed history, separate from your active backlog
+- Data persists locally via `localStorage` — no backend required, refresh-proof
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## How the suggestion logic works
+
+When you hit "Surprise Me", the app:
+1. Filters your backlog by your selected time/energy filters
+2. Looks at your completed items and calculates your average rating per category (TV Show, Film, Game, Book)
+3. Prefers items from your highest-rated category, if any are in the filtered pool
+4. Falls back to a random pick from the full filtered pool if there's no rating history yet, or no match in the preferred category
+
+It's simple weighted-random selection, not machine learning — but it's a genuine first step toward personalization, built on real data rather than guesswork.
+
+## Tech stack
+
+- React (Vite)
+- Plain CSS
+- Browser `localStorage` for persistence (no backend yet)
+
+## What I'd add next
+
+- A proper Node/Express + SQLite backend, so data isn't tied to one browser
+- Replace the `prompt()`-based rating flow with an in-page modal
+- Genre tags, not just type, for more nuanced suggestions
+- Basic stats page (items completed per month, breakdown by type)
+
+## Running it locally
+
+\`\`\`
+git clone https://github.com/Adamyork43/backlog-app.git
+cd backlog-app
+npm install
+npm run dev
+\`\`\`
